@@ -62,11 +62,11 @@ router.post('/', async (req, res) => {
       html: `
         <div style="font-family: Arial, sans-serif; color: #222; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
           <h2 style="color: #6a1b9a; margin-top: 0;">My Rare Aesthetics</h2>
-          <p>Hi <strong>${name}</strong>,</p>
+          <p>Hi <strong>${clientName}</strong>,</p>
           <p>Thank you for scheduling a consultation with us. We have successfully received your request:</p>
           <div style="background: #fbf7fb; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #f3e5f5;">
             <p style="margin: 0 0 8px;"><strong>Subject:</strong> ${service || 'Consultation Booking'}</p>
-            <p style="margin: 0; white-space: pre-wrap;">${message || ''}</p>
+            <p style="margin: 0; white-space: pre-wrap;">${clientMessage || ''}</p>
           </div>
           <p>We will update you with a confirmation email shortly.</p>
           <p style="margin-top: 25px; color: #777; font-size: 13px;">Warm regards,<br/><strong>My Rare Aesthetics Team</strong></p>

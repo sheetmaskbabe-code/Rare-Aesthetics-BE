@@ -1,14 +1,17 @@
-import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
+import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import mongoose from 'mongoose';
 
-// Load environment variables
+// Load backend environment variables explicitly from backend/.env
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config(); // fallback
+
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
 
 import { connectDB } from './config/db.js';
 import { isCloudinaryConfigured } from './config/cloudinary.js';
@@ -53,6 +56,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
+    frontendUrl: process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:5173',
     services: {
       mongodb: {
         status: mongoStatusMap[mongoState] || 'unknown',
@@ -83,7 +87,6 @@ app.use('/api/process-content', processRoutes);
 // Serve static images and public assets
 const potentialImagesDirs = [
   path.resolve(__dirname, 'public/images'),
-  path.resolve(__dirname, '../Rare/public/images'),
   path.resolve(__dirname, '../public/images'),
 ];
 for (const dir of potentialImagesDirs) {
@@ -92,7 +95,6 @@ for (const dir of potentialImagesDirs) {
   }
 }
 const potentialPublicDirs = [
-  path.resolve(__dirname, '../Rare/public'),
   path.resolve(__dirname, '../public'),
   path.resolve(__dirname, 'public'),
 ];
@@ -139,6 +141,7 @@ app.use((req, res) => {
 async function startServer() {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
+    console.log(`Linked Frontend: ${process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:5173'}`);
   });
 
   // Connect to MongoDB asynchronously
