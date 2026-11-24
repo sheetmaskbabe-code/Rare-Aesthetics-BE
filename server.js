@@ -149,7 +149,7 @@ app.use((req, res) => {
   res.status(404).json({ error: `Route not found: ${req.method} ${req.originalUrl}` });
 });
 
-// Start server
+// Start server locally; on Vercel the platform uses the exported app
 async function startServer() {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
@@ -160,6 +160,13 @@ async function startServer() {
   connectDB();
 }
 
-startServer();
+if (!process.env.VERCEL) {
+  startServer();
+} else {
+  // Warm the DB connection on cold start for serverless
+  connectDB().catch((err) => {
+    console.warn('[MongoDB] Vercel cold-start connect warning:', err.message);
+  });
+}
 
 export default app;
