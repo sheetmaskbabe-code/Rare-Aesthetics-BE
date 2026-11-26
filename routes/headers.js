@@ -94,6 +94,20 @@ export const DEFAULT_PAGE_HEADERS = {
       },
     ],
   },
+  articles: {
+    page: 'articles',
+    title: 'Articles & Editorial Notes Header Banner',
+    description: 'Header banner highlighting articles, cosmetic chemistry research, and laboratory notes',
+    slides: [
+      {
+        title: 'Editorial & Lab Notes',
+        description:
+          'Perspectives on cosmetic science, luxury formulation craft, ingredient research, and beauty brand building.',
+        media:
+          'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=2000&q=80',
+      },
+    ],
+  },
   contact: {
     page: 'contact',
     title: 'Contact Header Banner',
