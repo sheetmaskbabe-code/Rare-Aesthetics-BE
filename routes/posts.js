@@ -3,15 +3,15 @@ import mongoose from 'mongoose';
 import { BlogPost } from '../models/BlogPost.js';
 import { requireAdmin } from '../middleware/auth.js';
 import { deleteFromCloudinary } from '../config/cloudinary.js';
+import { connectDB } from '../config/db.js';
 
 const router = Router();
 
 // GET /api/posts - Get blog posts
 router.get('/', async (req, res) => {
   try {
-    // If MongoDB is not connected, return empty list immediately so frontend uses cached/default posts
     if (mongoose.connection.readyState !== 1) {
-      return res.json({ posts: [], message: 'MongoDB offline, using frontend defaults' });
+      await connectDB();
     }
 
     const showAll = req.query.all === 'true';
