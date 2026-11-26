@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 
 // Ensure DB is connected for requests (Vercel Serverless / Services lifecycle)
 app.use('/api', async (req, res, next) => {
-  if (mongoose.connection.readyState === 0) {
+  if (mongoose.connection.readyState !== 1) {
     try {
       await connectDB();
     } catch (err) {

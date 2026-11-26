@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { HomePageContent } from '../models/HomePageContent.js';
 import { AboutPageContent } from '../models/AboutPageContent.js';
 import { requireAdmin } from '../middleware/auth.js';
+import { connectDB } from '../config/db.js';
 
 const router = Router();
 
@@ -74,6 +75,10 @@ const defaultHomeData = {
 router.get('/', async (req, res) => {
   try {
     if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
+
+    if (mongoose.connection.readyState !== 1) {
       return res.json({ home: defaultHomeData, offline: true });
     }
 
@@ -93,6 +98,10 @@ router.get('/', async (req, res) => {
 router.post('/', requireAdmin, async (req, res) => {
   try {
     const payload = req.body || {};
+
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
 
     if (mongoose.connection.readyState !== 1) {
       return res.status(503).json({ error: 'Database is currently offline' });
