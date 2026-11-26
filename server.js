@@ -42,8 +42,12 @@ app.use(
 app.use(express.json({ limit: '25mb' }));
 app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 
-// Ensure DB is connected for requests (Vercel Serverless / Services lifecycle)
+// Ensure DB is connected and prevent stale browser/proxy caching for CMS API
 app.use('/api', async (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   if (mongoose.connection.readyState !== 1) {
     try {
       await connectDB();
