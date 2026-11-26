@@ -16,6 +16,14 @@ router.get('/', async (req, res) => {
 
     const showAll = req.query.all === 'true';
     const filter = showAll ? {} : { published: true };
+
+    if (req.query.type) {
+      if (req.query.type === 'article') {
+        filter.$or = [{ type: 'article' }, { type: { $exists: false } }, { type: null }, { type: '' }];
+      } else if (req.query.type === 'blog') {
+        filter.type = 'blog';
+      }
+    }
     const posts = await BlogPost.find(filter).sort({ date: -1, createdAt: -1 }).lean();
     return res.json({ posts });
   } catch (err) {

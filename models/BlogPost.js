@@ -12,6 +12,7 @@ const BlogPostSchema = new mongoose.Schema(
     imagePublicId: { type: String, default: '' },
     content: { type: String, default: '' },
     published: { type: Boolean, default: true },
+    type: { type: String, enum: ['article', 'blog'], default: 'article' },
   },
   { timestamps: true }
 );
