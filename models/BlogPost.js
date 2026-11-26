@@ -13,8 +13,14 @@ const BlogPostSchema = new mongoose.Schema(
     content: { type: String, default: '' },
     published: { type: Boolean, default: true },
     type: { type: String, enum: ['article', 'blog'], default: 'article' },
+    link: { type: String, default: '/book-consultation' },
+    buttonText: { type: String, default: 'Click here' },
   },
   { timestamps: true }
 );
 
-export const BlogPost = mongoose.models.BlogPost || mongoose.model('BlogPost', BlogPostSchema);
+// Always use the latest schema (avoids stale cached model dropping new fields like link/buttonText under --watch)
+if (mongoose.models.BlogPost) {
+  mongoose.deleteModel('BlogPost');
+}
+export const BlogPost = mongoose.model('BlogPost', BlogPostSchema);

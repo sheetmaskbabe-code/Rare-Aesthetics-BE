@@ -53,15 +53,36 @@ router.get('/:id', async (req, res) => {
 // POST /api/posts - Create or update blog post (Admin protected)
 router.post('/', requireAdmin, async (req, res) => {
   try {
-    const postData = req.body;
+    const postData = req.body || {};
     if (!postData.id || !postData.title) {
       return res.status(400).json({ error: 'Post id and title are required' });
     }
 
+    // Strip immutable / internal fields that break findOneAndUpdate ($set _id)
+    const {
+      _id,
+      __v,
+      createdAt,
+      updatedAt,
+      ...rest
+    } = postData;
+
+    const linkRaw = typeof rest.link === 'string' ? rest.link.trim() : '';
+    const buttonTextRaw = typeof rest.buttonText === 'string' ? rest.buttonText.trim() : '';
+
+    const payload = {
+      ...rest,
+      id: String(postData.id),
+      title: String(postData.title),
+      // Always persist CTA fields explicitly so they are never dropped
+      link: linkRaw || '/book-consultation',
+      buttonText: buttonTextRaw || 'Click here',
+    };
+
     const updated = await BlogPost.findOneAndUpdate(
-      { id: postData.id },
-      { $set: postData },
-      { returnDocument: 'after', upsert: true }
+      { id: payload.id },
+      { $set: payload },
+      { returnDocument: 'after', upsert: true, runValidators: true }
     );
 
     return res.json({ success: true, post: updated });

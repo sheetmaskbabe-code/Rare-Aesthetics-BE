@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import mongoose from 'mongoose';
+import { connectDB } from '../config/db.js';
 import { PortfolioItem } from '../models/PortfolioItem.js';
 import { PageHeader } from '../models/PageHeader.js';
 import { requireAdmin } from '../middleware/auth.js';
@@ -10,6 +11,14 @@ const router = Router();
 // GET /api/portfolio - List portfolio showcases
 router.get('/', async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      try {
+        await connectDB();
+      } catch (e) {
+        console.warn('[Portfolio] Failed to reconnect to MongoDB:', e.message);
+      }
+    }
+
     if (mongoose.connection.readyState !== 1) {
       return res.json({ portfolio: [], message: 'MongoDB offline, using frontend defaults' });
     }
