@@ -6,7 +6,7 @@ const SiteSettingsSchema = new mongoose.Schema(
     brandName: { type: String, default: 'My Rare Aesthetics' },
     tagline: { type: String, default: 'Where Science Meets Beauty Vision' },
     founderName: { type: String, default: 'Lindi-Grace' },
-    contactEmail: { type: String, default: 'info@mraesthetics.co.za' },
+    contactEmail: { type: String, default: 'info@rareaestheticsgroup.com' },
     contactPhone: { type: String, default: '+27 (0) 12 345 6789' },
     address: { type: String, default: 'Pretoria, Gauteng, South Africa' },
     businessHours: { type: String, default: 'Mon - Fri: 08:30 - 17:00 (SAST)' },

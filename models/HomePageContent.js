@@ -32,7 +32,7 @@ const HomePageContentSchema = new mongoose.Schema(
     aboutParagraph1: {
       type: String,
       default:
-        'Based in Pretoria, Gauteng, South Africa, we partner with founders and brands who want to move from idea to a carefully developed cosmetic product with clarity and care.',
+        'We partner with founders and brands across the globe, from North America, Europe, Australia, The Middle East and Africa who want to move from idea to an innovative cosmetic product with clarity and care',
     },
     aboutParagraph2: {
       type: String,

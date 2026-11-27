@@ -43,7 +43,7 @@ const AboutPageContentSchema = new mongoose.Schema(
     founderBio2: {
       type: String,
       default:
-        'Building The RA Group, with a vision to redefine the beauty and cosmetics industry through innovative formulations, premium-quality products, and science-backed skincare solutions.',
+        'We partner with founders and brands across the globe, from North America, Europe, Australia, The Middle East and Africa who want to move from idea to an innovative cosmetic product with clarity and care',
     },
     founderBio3: {
       type: String,
