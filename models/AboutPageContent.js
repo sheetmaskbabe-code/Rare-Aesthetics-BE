@@ -15,7 +15,7 @@ const AboutPageContentSchema = new mongoose.Schema(
     companyParagraph2: {
       type: String,
       default:
-        'We partner with founders and brands who want a refined pathway from concept to product — combining research, formulation thinking, evaluation support and practical production coordination.',
+        'We partner with founders and brands across the globe, from North America, Europe, Australia, The Middle East and Africa who want to move from idea to an innovative cosmetic product with clarity and care',
     },
     companyParagraph3: {
       type: String,
